@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3670230 */
+  src: url('iconfont.woff2?t=1664033658639') format('woff2'),
+       url('iconfont.woff?t=1664033658639') format('woff'),
+       url('iconfont.ttf?t=1664033658639') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-yanjing:before {
+  content: "\e661";
+}
+
+.icon-jiesuo:before {
+  content: "\e669";
+}
+
+.icon-home-page:before {
+  content: "\e63e";
+}
+
+.icon-dengpao:before {
+  content: "\e631";
+}
+
+.icon-webicon14:before {
+  content: "\e678";
+}
+
+.icon-renyuanguanli:before {
+  content: "\e62d";
+}
+
+.icon-dunpaibaoxianrenzheng_o:before {
+  content: "\eba0";
+}
+
+.icon-didiandingwei_o:before {
+  content: "\ebba";
+}
+
+.icon-gongdan:before {
+  content: "\e6d9";
+}
+
+.icon-shebei:before {
+  content: "\e617";
+}
+
+.icon-shouji:before {
+  content: "\e853";
+}
+
+.icon-dingdan:before {
+  content: "\e623";
+}
+
+.icon-biyan:before {
+  content: "\e65d";
+}
+
+.icon-shangpinguanli:before {
+  content: "\e809";
+}
+
