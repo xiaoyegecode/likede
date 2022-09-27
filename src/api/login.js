@@ -1,5 +1,9 @@
 import request from '@/utils/request'
-
+/**
+ *登录
+ * @param {*}
+ * @returns
+ */
 export const loginAPI = (data) => {
   return request({
     url: '/user-service/user/login',
