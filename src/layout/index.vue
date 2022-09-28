@@ -73,6 +73,9 @@ export default {
     position: absolute;
     z-index: 999;
   }
+ .sidebar-container {
+    top: 60px
+  }
 
   .fixed-header {
     position: fixed;

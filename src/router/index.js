@@ -1,6 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import repairOrder from './modules/repairOrder'
+import location from './modules/location'
+import equipment from './modules/equipment'
+import personnel from './modules/personnel'
+import goods from './modules/goods'
+import strategy from './modules/strategy'
+import order from './modules/order'
+import reconciliation from './modules/reconciliation'
+const asyncRoutes = [
+  repairOrder,
+  location,
+  equipment,
+  personnel,
+  goods,
+  strategy,
+  order,
+  reconciliation
+]
 Vue.use(Router)
 
 /* Layout */
@@ -38,7 +55,7 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: [...constantRoutes, ...asyncRoutes]
 })
 
 const router = createRouter()
