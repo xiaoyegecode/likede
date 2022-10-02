@@ -1,7 +1,7 @@
 <template>
   <el-dialog title="设备详情" :visible.sync="dialogVisible" width="630px" :before-close="handleClose">
     <div class="aisle">
-      <el-row>
+      <el-row class="sku-stats" type="flex" align="middle">
         <el-col :span="6">
           <span>销售量： </span>
           <span>{{ salesNum }}个</span>
@@ -19,15 +19,13 @@
           <span>{{ maintenanceNum }}次</span>
         </el-col>
       </el-row>
-      <p>商品销量（月）</p>
-      <div>
-        <el-row v-if="isShow">
-          <el-col v-for="(item,index) in tableData" :key="index" :span="6">
-            <div class="grid-content bg-purple">{{ item.skuName }}: {{ item.count }}</div>
-          </el-col>
-        </el-row>
-        <div v-if="!isShow">当前设备未销售商品</div>
-      </div>
+      <p class="sku-title">商品销量（月）</p>
+      <el-row v-if="isShow" class="sku-list">
+        <el-col v-for="(item,index) in tableData" :key="index" :span="6">
+          <div class="sku-item">{{ item.skuName }}: {{ item.count }}</div>
+        </el-col>
+      </el-row>
+      <div v-if="!isShow">当前设备未销售商品</div>
     </div>
   </el-dialog>
 </template>
@@ -83,6 +81,53 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.el-dialog {
+  border-radius: 10px;
 
+  .el-dialog__header {
+    background: none;
+
+    .el-dialog__title {
+      color: #333;
+      line-height: 22px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+  }
+
+  .el-dialog__body {
+    padding: 20px 20px 30px;
+    color: #666;
+
+    .aisle {
+      width: 579px;
+      margin: 0px auto;
+
+      .sku-stats {
+        height: 54px;
+        background: rgba(227, 233, 245, .39);
+        text-align: center;
+
+        span:nth-child(2) {
+          color: #5f84ff;
+        }
+      }
+
+      .sku-title {
+        margin: 20px 0 12px 6px;
+      }
+      .sku-list {
+        border-top: 1px solid #d8dde3;
+        border-left: 1px solid #d8dde3;
+        .sku-item {
+          padding: 0 10px;
+          line-height: 40px;
+          border-right: 1px solid #d8dde3;
+          border-bottom: 1px solid #d8dde3;
+        }
+      }
+    }
+  }
+}
 </style>
