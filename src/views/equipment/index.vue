@@ -1,5 +1,6 @@
 <template>
-  <div>设备</div>
+  <div>
+  </div>
 </template>
 
 <script>

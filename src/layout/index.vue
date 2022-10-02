@@ -35,7 +35,7 @@ export default {
     },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
+        // hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
@@ -75,6 +75,9 @@ export default {
   }
  .sidebar-container {
     top: 60px
+  }
+  .main-container {
+    padding-top: 60px;
   }
 
   .fixed-header {

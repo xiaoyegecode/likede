@@ -98,7 +98,7 @@ export default {
   methods: {
     async getWorkOrderInfo() {
       const { data } = await getWorkOrderInfoAPI(this.start + ' 00:00:00', this.end + ' 23:59:59')
-      console.log(data)
+      // console.log(data)
       this.workOrder = data
     },
     async getSales() {
