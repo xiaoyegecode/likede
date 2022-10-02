@@ -22,7 +22,12 @@
       <p class="sku-title">商品销量（月）</p>
       <el-row v-if="isShow" class="sku-list">
         <el-col v-for="(item,index) in tableData" :key="index" :span="6">
-          <div class="sku-item">{{ item.skuName }}: {{ item.count }}</div>
+          <el-row class="sku-item">
+            <el-col :span="14">
+              <div class="sku-name">{{ item.skuName }}</div>
+            </el-col>
+            <el-col :span="10">:{{ item.count }}</el-col>
+          </el-row>
         </el-col>
       </el-row>
       <div v-if="!isShow">当前设备未销售商品</div>
@@ -125,6 +130,11 @@ export default {
           line-height: 40px;
           border-right: 1px solid #d8dde3;
           border-bottom: 1px solid #d8dde3;
+          .sku-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
         }
       }
     }
