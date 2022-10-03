@@ -30,17 +30,17 @@
       </el-table>
     </el-card>
     <!-- 弹出层 -->
-    <AddDeviceDialog ref="addDeviceRef" :dialog-visible.sync="dialogVisible" @refreshList="equipmentType" />
+    <AddDeviceTypeDialog ref="addDeviceRef" :dialog-visible.sync="dialogVisible" @refreshList="equipmentType" />
   </div>
 </template>
 
 <script>
 import { equipmentTypeAPI, delDeviceTypeAPI } from '@/api/equipment'
 import Search from '@/components/Search'
-import AddDeviceDialog from './cnps/AddDeviceDialog.vue'
+import AddDeviceTypeDialog from './cnps/AddDeviceTypeDialog.vue'
 export default {
   name: 'Equipments',
-  components: { Search, AddDeviceDialog },
+  components: { Search, AddDeviceTypeDialog },
   data() {
     return {
       tableData: [],

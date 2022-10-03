@@ -4,7 +4,7 @@
     <el-card class="content" shadow="never">
       <!-- 新建按钮 -->
       <el-row class="row">
-        <el-button class="button" type="warning" icon="el-icon-circle-plus-outline">
+        <el-button class="button" type="warning" icon="el-icon-circle-plus-outline" @click="addDevice">
           新建
         </el-button>
         <el-button class="button2" type="info">
@@ -31,8 +31,9 @@
       <!-- 分页器 -->
       <Pagination :total-count="totalCount" :page-index="pageIndex" :total-page="totalPage" :table-data="tableData"
         @prevPage="handlePrevPage" @nextPage="handleNextPage" />
-
     </el-card>
+    <!-- 新建设备弹出层 -->
+    <AddDeviceDialog ref="addDeviceRef" :dialog-visible.sync="dialogVisible" @refreshList="equipmentSearch" />
   </div>
 </template>
 
@@ -40,16 +41,18 @@
 import { equipmentSearchAPI } from '@/api/equipment'
 import Search from '@/components/Search'
 import Pagination from '@/components/Pagination'
+import AddDeviceDialog from './cnps/AddDeviceDialog.vue'
 export default {
   name: 'Equipments',
-  components: { Search, Pagination },
+  components: { Search, Pagination, AddDeviceDialog },
   data() {
     return {
       tableData: [],
       pageIndex: 1,
       pageSize: 10,
       totalCount: 0,
-      totalPage: 0
+      totalPage: 0,
+      dialogVisible: false
     }
   },
   created() {
@@ -88,7 +91,7 @@ export default {
       return index + 1 + (this.pageIndex - 1) * this.pageSize
     },
     async search(innerCode) {
-      const { data } = await equipmentSearchAPI(null, innerCode)
+      const { data } = await equipmentSearchAPI(null, null, innerCode)
       this.tableData = data.currentPageRecords.map(item => {
         if (item.vmStatus === 0) {
           item.vmStatus = '未投放'
@@ -99,6 +102,10 @@ export default {
         }
         return item
       })
+    },
+    addDevice() {
+      this.dialogVisible = true
+      this.$refs.addDeviceRef.getTypeNode()
     }
   }
 }

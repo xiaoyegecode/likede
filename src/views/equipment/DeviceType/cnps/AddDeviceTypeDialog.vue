@@ -117,7 +117,6 @@ export default {
         this.$message.success(this.deviceForm.typeId ? '修改成功' : '新增成功')
         this.handleClose()
       } catch (error) {
-        console.log(error)
         this.$message.error(error.message)
       }
     }

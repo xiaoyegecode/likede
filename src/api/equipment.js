@@ -5,12 +5,13 @@ import request from '@/utils/request'
  * @param {*id} 设备编号
  * @returns 都不是必须要填
  */
-export const equipmentSearchAPI = (index, id) => {
+export const equipmentSearchAPI = (pageIndex, pageSize, innerCode) => {
   return request({
     url: '/vm-service/vm/search',
     params: {
-      pageIndex: index,
-      innerCode: id
+      pageIndex,
+      pageSize,
+      innerCode
     }
   })
 }
@@ -102,5 +103,32 @@ export const replenishmentNumAPI = (innerCode, start, end) => {
 export const maintenanceNumAPI = (innerCode, start, end) => {
   return request({
     url: `/task-service/task/repairCount/${innerCode}/${start}/${end}`,
+  })
+}
+/**
+ * 新增售货机
+ * @param {*} vmType 售货机类型Id
+ * @param {*} nodeId 所属点位Id
+ * @param {*} createUserId 创建人Id
+ * @returns
+ */
+export const addDeviceAPI = (data) => {
+  return request({
+    method: 'POST',
+    url: '/vm-service/vm',
+    data
+  })
+}
+/**
+ * 售货机点位搜索
+ * @returns
+ */
+export const addDeviceNodeAPI = () => {
+  return request({
+    url: '/vm-service/node/search',
+    params: {
+      pageIndex: 1,
+      pageSize: 100000
+    }
   })
 }
