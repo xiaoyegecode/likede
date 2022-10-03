@@ -132,3 +132,15 @@ export const addDeviceNodeAPI = () => {
     }
   })
 }
+/**
+ * 修改售货机点位
+ * @param {*} id
+ * @param {*} nodeId
+ * @returns
+ */
+export const changeDevicePointAPI = (id, nodeId) => {
+  return request({
+    url: `/vm-service/vm/${id}/${nodeId}`,
+    method: 'PUT'
+  })
+}

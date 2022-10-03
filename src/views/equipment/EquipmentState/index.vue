@@ -69,7 +69,9 @@ export default {
           return item
         })
       } catch (error) {
-        console.log(error)
+        if (error.response.status === 500) {
+          this.$message.error(error.response.data)
+        }
       }
     },
     handlePrevPage() {

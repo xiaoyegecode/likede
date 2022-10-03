@@ -65,7 +65,9 @@ export default {
         this.$message.success('新增设备成功')
         this.handleClose()
       } catch (error) {
-        this.$message.error(error.message)
+        if (error.response.status === 500) {
+          this.$message.error(error.response.data)
+        }
       }
     }
   }

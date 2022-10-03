@@ -21,10 +21,10 @@
         <el-table-column label="合作商" prop="ownerName" width="240px" />
         <el-table-column label="设备状态" prop="vmStatus" />
         <el-table-column label="操作" width="200">
-          <template>
+          <template slot-scope="{ row }">
             <el-button size="small" type="text">货道</el-button>
             <el-button size="small" type="text">策略</el-button>
-            <el-button size="small" type="text">修改</el-button>
+            <el-button size="small" type="text" @click="modifyDevice(row)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -34,6 +34,8 @@
     </el-card>
     <!-- 新建设备弹出层 -->
     <AddDeviceDialog ref="addDeviceRef" :dialog-visible.sync="dialogVisible" @refreshList="equipmentSearch" />
+    <!-- 修改弹出层 -->
+    <ModifyDeviceDialog ref="modifyDeviceRef" :dialog-visible.sync="modifyDeviceVisible" @refreshList="equipmentSearch" />
   </div>
 </template>
 
@@ -42,9 +44,10 @@ import { equipmentSearchAPI } from '@/api/equipment'
 import Search from '@/components/Search'
 import Pagination from '@/components/Pagination'
 import AddDeviceDialog from './cnps/AddDeviceDialog.vue'
+import ModifyDeviceDialog from './cnps/ModifyDeviceDialog.vue'
 export default {
   name: 'Equipments',
-  components: { Search, Pagination, AddDeviceDialog },
+  components: { Search, Pagination, AddDeviceDialog, ModifyDeviceDialog },
   data() {
     return {
       tableData: [],
@@ -52,7 +55,8 @@ export default {
       pageSize: 10,
       totalCount: 0,
       totalPage: 0,
-      dialogVisible: false
+      dialogVisible: false,
+      modifyDeviceVisible: false
     }
   },
   created() {
@@ -106,6 +110,11 @@ export default {
     addDevice() {
       this.dialogVisible = true
       this.$refs.addDeviceRef.getTypeNode()
+    },
+    modifyDevice(row) {
+      this.modifyDeviceVisible = true
+      this.$refs.modifyDeviceRef.formData = row
+      this.$refs.modifyDeviceRef.getNode()
     }
   }
 }

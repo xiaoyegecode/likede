@@ -76,7 +76,9 @@ export default {
         this.equipmentType() // 重新加载数据
         this.$message.success('删除设备成功')
       } catch (error) {
-        console.log(error)
+        if (error.response.status === 500) {
+          this.$message.error(error.response.data)
+        }
       }
     },
     addDevice() {
