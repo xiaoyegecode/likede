@@ -144,3 +144,48 @@ export const changeDevicePointAPI = (id, nodeId) => {
     method: 'PUT'
   })
 }
+/**
+ * 查询售货机策略
+ * @param {*} innerCode
+ * @returns
+ */
+export const stragetyAPI = (innerCode) => {
+  return request({
+    url: `/vm-service/policy/vmPolicy/${innerCode}`
+  })
+}
+/**
+ * 策略列表
+ * @returns promise
+ */
+export function AllStrategyAPI() {
+  return request({
+    url: `/vm-service/policy`
+  })
+}
+/**
+ * 取消策略
+ * @param {Number} innerCode
+ * @param {Number} policyId
+ * @returns
+ */
+export function cancleStrategyAPI(innerCode, policyId) {
+  return request({
+    url: `vm-service/vm/cancelPolicy/${innerCode}/${policyId}`,
+    method: 'PUT'
+  })
+}
+/**
+ * 应用策略
+ * @returns promise
+ */
+export function applicationStrategyAPI(innerCodeLists, policyId) {
+  return request({
+    url: `/vm-service/vm/applyPolicy`,
+    method: 'PUT',
+    data: {
+      innerCodeList: [innerCodeLists],
+      policyId
+    }
+  })
+}

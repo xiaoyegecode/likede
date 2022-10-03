@@ -23,7 +23,7 @@
         <el-table-column label="操作" width="200">
           <template slot-scope="{ row }">
             <el-button size="small" type="text">货道</el-button>
-            <el-button size="small" type="text">策略</el-button>
+            <el-button size="small" type="text" @click="stragety(row.innerCode)">策略</el-button>
             <el-button size="small" type="text" @click="modifyDevice(row)">修改</el-button>
           </template>
         </el-table-column>
@@ -36,6 +36,8 @@
     <AddDeviceDialog ref="addDeviceRef" :dialog-visible.sync="dialogVisible" @refreshList="equipmentSearch" />
     <!-- 修改弹出层 -->
     <ModifyDeviceDialog ref="modifyDeviceRef" :dialog-visible.sync="modifyDeviceVisible" @refreshList="equipmentSearch" />
+    <!-- 策略弹出层 -->
+    <StrategyDialog ref="strategyRef" :dialog-visible.sync="StrategyVisible" @refreshList="equipmentSearch" />
   </div>
 </template>
 
@@ -45,9 +47,10 @@ import Search from '@/components/Search'
 import Pagination from '@/components/Pagination'
 import AddDeviceDialog from './cnps/AddDeviceDialog.vue'
 import ModifyDeviceDialog from './cnps/ModifyDeviceDialog.vue'
+import StrategyDialog from './cnps/StrategyDialog.vue'
 export default {
   name: 'Equipments',
-  components: { Search, Pagination, AddDeviceDialog, ModifyDeviceDialog },
+  components: { Search, Pagination, AddDeviceDialog, ModifyDeviceDialog, StrategyDialog },
   data() {
     return {
       tableData: [],
@@ -56,7 +59,8 @@ export default {
       totalCount: 0,
       totalPage: 0,
       dialogVisible: false,
-      modifyDeviceVisible: false
+      modifyDeviceVisible: false,
+      StrategyVisible: false
     }
   },
   created() {
@@ -115,6 +119,11 @@ export default {
       this.modifyDeviceVisible = true
       this.$refs.modifyDeviceRef.formData = row
       this.$refs.modifyDeviceRef.getNode()
+    },
+    stragety(innerCode) {
+      this.StrategyVisible = true
+      this.$refs.strategyRef.innerCode = innerCode
+      this.$refs.strategyRef.stragetys()
     }
   }
 }

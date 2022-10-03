@@ -13,7 +13,7 @@
       </el-form-item>
       <el-form-item label="合作商：">{{ formData.ownerName }}</el-form-item>
       <el-form-item v-if="formData.region" label="所属区域：">{{ formData.region.name }}</el-form-item>
-      <el-form-item label="设备地址：">{{ address }}</el-form-item>
+      <el-form-item v-if="formData.node" label="设备地址：">{{ formData.node.addr }}</el-form-item>
     </el-form>
     <el-row slot="footer" type="flex" justify="center" align="middle" class="dialog-footer">
       <el-button class="cancel" @click="handleClose">取 消</el-button>
@@ -43,9 +43,6 @@ export default {
   computed: {
     timer() {
       return dayjs(this.formData.lastSupplyTime).format('YYYY.MM.DD hh:mm:ss')
-    },
-    address() {
-      return this.formData.node.addr.split('-')[3]
     }
   },
   methods: {
