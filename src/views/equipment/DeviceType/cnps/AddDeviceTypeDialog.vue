@@ -38,8 +38,8 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="deviceForm.image" :src="deviceForm.image" class="avatar" />
-          <i v-else class="el-icon-upload avatar-uploader-icon" ></i>
+          <img v-if="deviceForm.image" :src="deviceForm.image" class="avatar"></img>
+          <i v-else class="el-icon-upload avatar-uploader-icon" />
         </el-upload>
         <span>支持扩展名:jpeg,png,文件不得大于100KB</span>
       </el-form-item>
@@ -90,7 +90,7 @@ export default {
     handleClose() {
       this.$emit('update:dialog-visible', false)
       this.$refs.deviceDialogForm.resetFields()
-      this.formData = { }
+      this.deviceForm = { }
     },
     handleAvatarSuccess(res, file) {
       // console.log(file)

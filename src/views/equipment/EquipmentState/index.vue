@@ -23,8 +23,14 @@
         </el-table-column>
       </el-table>
       <!-- 分页器 -->
-      <Pagination :total-count="totalCount" :page-index="pageIndex" :total-page="totalPage" :table-data="tableData"
-          @prevPage="handlePrevPage" @nextPage="handleNextPage" />
+      <Pagination
+        :total-count="totalCount"
+        :page-index="pageIndex"
+        :total-page="totalPage"
+        :table-data="tableData"
+        @prevPage="handlePrevPage"
+        @nextPage="handleNextPage"
+      />
     </el-card>
     <DetailDialog ref="detailRef" :dialog-visible.sync="dialogVisible" />
   </div>
@@ -86,7 +92,7 @@ export default {
       return index + 1 + (this.pageIndex - 1) * this.pageSize
     },
     async search(innerCode) {
-      const { data } = await equipmentSearchAPI(null, innerCode)
+      const { data } = await equipmentSearchAPI(null, null, innerCode)
       this.tableData = data.currentPageRecords.map(item => {
         if (item.vmStatus === 0) {
           item.vmStatus = '未投放'
@@ -111,7 +117,6 @@ export default {
 <style lang="scss" scoped>
 .content {
   width: 100%;
-  height: 65vh;
   background-color: #fff;
 
   ::v-deep .el-table {

@@ -1,17 +1,31 @@
 <template>
-  <el-dialog title="新增设备" width="630px" :visible.sync="dialogVisible" :before-close="handleClose">
-    <el-form ref="addDeviceDialogRef" :model="dataForm" :rules="rules" label-width="100px">
+  <el-dialog
+    custom-class="dialog-container"
+    title="新增设备"
+    width="630px"
+    :visible.sync="dialogVisible"
+    :before-close="handleClose"
+  >
+    <el-form ref="addDeviceDialogRef" :model="dataForm" :rules="rules" label-width="140px">
       <el-form-item label="设备编号："> 系统自动生成 </el-form-item>
       <el-form-item label="选择型号：" prop="vmType">
         <el-select v-model="dataForm.vmType" placeholder="请选择">
-          <el-option v-for="item in equipmentType" :key="item.typeId" :label="item.name" :value="item.typeId">
-          </el-option>
+          <el-option
+            v-for="item in equipmentType"
+            :key="item.typeId"
+            :label="item.name"
+            :value="item.typeId"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="选择点位：" prop="nodeId">
         <el-select v-model="dataForm.nodeId" placeholder="请选择">
-          <el-option v-for="item in equipmentNode" :key="item.id" :label="item.name" :value="item.id">
-          </el-option>
+          <el-option
+            v-for="item in equipmentNode"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
+          />
         </el-select>
       </el-form-item>
     </el-form>
@@ -74,6 +88,59 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
+.dialog-container {
+  border-radius: 10px;
 
+  .el-dialog__header {
+    padding: 20px;
+    padding-bottom: 10px;
+
+    .el-dialog__title {
+      line-height: 22px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+  .el-dialog__body {
+    padding: 20px 20px 30px;
+    color: #666;
+    .el-form-item {
+      margin-bottom: 20px;
+      .el-form-item__label {
+        line-height: 36px;
+        font-weight: normal;
+      }
+      .el-form-item__content {
+        width: 396px;
+        line-height: 36px;
+        .el-select {
+        width: 100%;
+        }
+      }
+    }
+  }
+  .el-dialog__footer {
+    padding-top: 0;
+    padding-bottom: 40px;
+    .el-button {
+        width: 80px!important;
+        height: 36px;
+      }
+      .el-button.cancel {
+        background-color: #fbf4f0!important;
+        border: none;
+        color: #655b56!important;
+      }
+      .el-button.confirm {
+        background: linear-gradient(135deg,#ff9743,#ff5e20)!important;
+        border: none;
+        margin-left: 40px;
+        span {
+          color: #fff;
+        }
+      }
+  }
+}
 </style>

@@ -94,7 +94,7 @@ export const deviceSalesMoneyAPI = (partnerId, start, end, innerCode) => {
  */
 export const replenishmentNumAPI = (innerCode, start, end) => {
   return request({
-    url: `/task-service/task/supplyCount/${innerCode}/${start}/${end}`,
+    url: `/task-service/task/supplyCount/${innerCode}/${start}/${end}`
   })
 }
 /**
@@ -102,7 +102,7 @@ export const replenishmentNumAPI = (innerCode, start, end) => {
  */
 export const maintenanceNumAPI = (innerCode, start, end) => {
   return request({
-    url: `/task-service/task/repairCount/${innerCode}/${start}/${end}`,
+    url: `/task-service/task/repairCount/${innerCode}/${start}/${end}`
   })
 }
 /**
@@ -184,8 +184,54 @@ export function applicationStrategyAPI(innerCodeLists, policyId) {
     url: `/vm-service/vm/applyPolicy`,
     method: 'PUT',
     data: {
-      innerCodeList: [innerCodeLists],
+      innerCodeList: [...innerCodeLists],
       policyId
+    }
+  })
+}
+/**
+ * 获取售货机货道详情
+ * @param {*} innerCode
+ * @returns
+ */
+export const channelDetailsAPI = (innerCode) => {
+  return request({
+    url: `/vm-service/channel/channelList/${innerCode}`
+  })
+}
+/**
+ * 获取商圈列表
+ * @returns promise
+ */
+export const getBusinessListAPI = () => {
+  return request({
+    method: 'GET',
+    url: `/vm-service/businessType`
+  })
+}
+/**
+ * 获取商圈下销量前10的商品(补货推荐)
+ * @param {*} businessId
+ * @returns
+ */
+export function businessTop10API(businessId) {
+  return request({
+    url: `/vm-service/sku/businessTop10/${businessId}`
+  })
+}
+/**
+ * 商品搜索
+ * @param {*} pageIndex
+ * @param {*} pageSize
+ * @returns
+ */
+export function SearchSkuAPI(pageIndex, pageSize, skuName) {
+  return request({
+    url: '/vm-service/sku/search',
+    params: {
+      pageIndex,
+      pageSize,
+      skuName
     }
   })
 }

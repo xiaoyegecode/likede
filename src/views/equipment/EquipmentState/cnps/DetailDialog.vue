@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="设备详情" :visible.sync="dialogVisible" width="630px" :before-close="handleClose">
+  <el-dialog custom-class="dialog-container" title="设备详情" :visible.sync="dialogVisible" width="630px" :before-close="handleClose">
     <div class="aisle">
       <el-row class="sku-stats" type="flex" align="middle">
         <el-col :span="6">
@@ -30,7 +30,7 @@
           </el-row>
         </el-col>
       </el-row>
-      <div v-if="!isShow">当前设备未销售商品</div>
+      <div v-if="!isShow" class="tips">当前设备未销售商品</div>
     </div>
   </el-dialog>
 </template>
@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss">
-.el-dialog {
+.dialog-container {
   border-radius: 10px;
 
   .el-dialog__header {
@@ -136,6 +136,9 @@ export default {
             text-overflow: ellipsis;
           }
         }
+      }
+      .tips {
+        text-align: center;
       }
     }
   }

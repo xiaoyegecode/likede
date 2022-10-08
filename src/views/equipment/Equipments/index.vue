@@ -7,12 +7,12 @@
         <el-button class="button" type="warning" icon="el-icon-circle-plus-outline" @click="addDevice">
           新建
         </el-button>
-        <el-button class="button2" type="info">
+        <el-button class="button2" type="info" @click="batchOperation">
           批量操作
         </el-button>
       </el-row>
       <!-- 表格 -->
-      <el-table :header-cell-style="{background:'#f3f6fb'}" tooltip-effect="dark" width="100%" :data="tableData">
+      <el-table :header-cell-style="{background:'#f3f6fb'}" tooltip-effect="dark" width="100%" :data="tableData" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
         <el-table-column label="序号" width="120" type="index" :index="indexAdd" />
         <el-table-column label="设备编号" prop="innerCode" width="240px" />
@@ -22,15 +22,22 @@
         <el-table-column label="设备状态" prop="vmStatus" />
         <el-table-column label="操作" width="200">
           <template slot-scope="{ row }">
-            <el-button size="small" type="text">货道</el-button>
+            <el-button size="small" type="text" @click="channel(row)">货道</el-button>
             <el-button size="small" type="text" @click="stragety(row.innerCode)">策略</el-button>
             <el-button size="small" type="text" @click="modifyDevice(row)">修改</el-button>
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页器 -->
-      <Pagination :total-count="totalCount" :page-index="pageIndex" :total-page="totalPage" :table-data="tableData"
-        @prevPage="handlePrevPage" @nextPage="handleNextPage" />
+      <Pagination
+        v-show="totalPage>1"
+        :total-count="totalCount"
+        :page-index="pageIndex"
+        :total-page="totalPage"
+        :table-data="tableData"
+        @prevPage="handlePrevPage"
+        @nextPage="handleNextPage"
+      />
     </el-card>
     <!-- 新建设备弹出层 -->
     <AddDeviceDialog ref="addDeviceRef" :dialog-visible.sync="dialogVisible" @refreshList="equipmentSearch" />
@@ -38,19 +45,22 @@
     <ModifyDeviceDialog ref="modifyDeviceRef" :dialog-visible.sync="modifyDeviceVisible" @refreshList="equipmentSearch" />
     <!-- 策略弹出层 -->
     <StrategyDialog ref="strategyRef" :dialog-visible.sync="StrategyVisible" @refreshList="equipmentSearch" />
+    <!-- 货道弹出层 -->
+    <ChanneDialog ref="channelRef" :dialog-visible.sync="channelVisible" @refreshList="equipmentSearch" />
   </div>
 </template>
 
 <script>
-import { equipmentSearchAPI } from '@/api/equipment'
+import { equipmentSearchAPI, AllStrategyAPI } from '@/api/equipment'
 import Search from '@/components/Search'
 import Pagination from '@/components/Pagination'
 import AddDeviceDialog from './cnps/AddDeviceDialog.vue'
 import ModifyDeviceDialog from './cnps/ModifyDeviceDialog.vue'
 import StrategyDialog from './cnps/StrategyDialog.vue'
+import ChanneDialog from './cnps/ChanneDialog.vue'
 export default {
   name: 'Equipments',
-  components: { Search, Pagination, AddDeviceDialog, ModifyDeviceDialog, StrategyDialog },
+  components: { Search, Pagination, AddDeviceDialog, ModifyDeviceDialog, StrategyDialog, ChanneDialog },
   data() {
     return {
       tableData: [],
@@ -60,7 +70,9 @@ export default {
       totalPage: 0,
       dialogVisible: false,
       modifyDeviceVisible: false,
-      StrategyVisible: false
+      StrategyVisible: false,
+      channelVisible: false,
+      multipleSelection: []
     }
   },
   created() {
@@ -100,6 +112,8 @@ export default {
     },
     async search(innerCode) {
       const { data } = await equipmentSearchAPI(null, null, innerCode)
+      this.totalCount = data.totalCount
+      this.totalPage = data.totalPage
       this.tableData = data.currentPageRecords.map(item => {
         if (item.vmStatus === 0) {
           item.vmStatus = '未投放'
@@ -122,8 +136,32 @@ export default {
     },
     stragety(innerCode) {
       this.StrategyVisible = true
-      this.$refs.strategyRef.innerCode = innerCode
+      this.$refs.strategyRef.innerCode = [innerCode]
       this.$refs.strategyRef.stragetys()
+    },
+    channel(row) {
+      this.channelVisible = true
+      this.$refs.channelRef.currentPageRecord = row
+      this.$refs.channelRef.getChannelDetails()
+    },
+    async batchOperation() {
+      if (this.multipleSelection.length === 0) {
+        return this.$message({
+          message: '请勾选售货机',
+          type: 'warning'
+        })
+      }
+      this.StrategyVisible = true
+      const { data } = await AllStrategyAPI()
+      this.$refs.strategyRef.AllStrategy = data
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+      const innerCodeList = []
+      this.multipleSelection.forEach(item => {
+        innerCodeList.push(item.innerCode)
+      })
+      this.$refs.strategyRef.innerCode = innerCodeList
     }
   }
 }
@@ -132,7 +170,6 @@ export default {
 <style lang="scss" scoped>
 .content {
   width: 100%;
-  height: 70vh;
   background-color: #fff;
 
   .row {
