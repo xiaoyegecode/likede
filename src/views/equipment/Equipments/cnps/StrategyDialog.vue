@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="批量策略管理" width="630px" :visible.sync="dialogVisible" :before-close="handleClose">
+  <el-dialog :title="title" width="630px" :visible.sync="dialogVisible" :before-close="handleClose">
     <el-form v-if="isShow" ref="formRef" label-width="100px">
       <el-form-item label="选择策略：">
         <el-select v-model="policyId">
@@ -44,6 +44,11 @@ export default {
       innerCode: '',
       stragetyList: {},
       AllStrategy: []
+    }
+  },
+  computed: {
+    title() {
+      return this.isShow ? '批量修改策略' : '修改策略'
     }
   },
   methods: {
